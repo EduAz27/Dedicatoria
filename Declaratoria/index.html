@@ -63,7 +63,7 @@ button,.btn{font:inherit;font-size:1.05rem;cursor:pointer;border-radius:999px;pa
 .ruta li:last-child::after{display:none}
 .ruta h3{margin:0 0 .3rem;font-weight:500;font-size:1.3rem}
 .ruta p{margin:0;color:var(--soft);line-height:1.6}
-.btn[hidden]{display:none}
+.btn[hidden],#atras[hidden]{display:none}
 .btn.wa{background:#0e7c59;border-color:#0e7c59;color:#fff}
 .ic{width:1.2em;height:1.2em;vertical-align:-.25em;margin-right:.5rem}
 @media (prefers-reduced-motion:reduce){.pantalla,.cambia,.solapa,.sello{animation:none;transition:none}}
@@ -88,7 +88,10 @@ button,.btn{font:inherit;font-size:1.05rem;cursor:pointer;border-radius:999px;pa
     <h2 id="ct"></h2>
     <p class="txt" id="cd"></p>
   </div>
-  <button id="sig" type="button">Siguiente</button>
+  <div class="btns">
+    <button id="atras" class="sec" type="button" hidden>Volver</button>
+    <button id="sig" type="button">Siguiente</button>
+  </div>
 </section>
 
 <section id="s-q" class="pantalla card" hidden>
@@ -197,6 +200,7 @@ function mostrar(i){
   $("ct").textContent = PASOS[i].t;
   $("cd").textContent = PASOS[i].d;
   $("dots").innerHTML = PASOS.map((_, k) => "<i class=\"" + (k <= i ? "on" : "") + "\"></i>").join("");
+  $("atras").hidden = i === 0;
   $("sig").textContent = i < PASOS.length - 1 ? "Siguiente" : "Continuar";
   const c = $("contenido");
   c.classList.remove("cambia");
@@ -205,6 +209,9 @@ function mostrar(i){
 }
 $("sig").addEventListener("click", () => {
   if(paso < PASOS.length - 1) mostrar(paso + 1); else ir("s-q");
+});
+$("atras").addEventListener("click", () => {
+  if(paso > 0) mostrar(paso - 1);
 });
 
 $("si").addEventListener("click", () => {
